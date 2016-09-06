@@ -33,11 +33,11 @@ DEALINGS IN THE SOFTWARE.
 
 #include<stdint.h>
 
-void *ini_load(char *fname);
-void ini_free(void *ini);
+extern void *ini_load(char *fname);
+extern void ini_free(void *ini);
 
-void ini_getbool(void *ini, char *section, char *name, char *value);
-void ini_getint(void *ini, char *section, char *name, uint64_t *value);
-void ini_getstr(void *ini, char *section, char *name, char *value, int len);
+extern void ini_getbool(void *ini, char *section, char *name, char *value);
+extern void ini_getint(void *ini, char *section, char *name, uint64_t *value);
+extern void ini_getstr(void *ini, char *section, char *name, char *value, int len);
 
 #endif
