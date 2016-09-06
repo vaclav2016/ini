@@ -1,0 +1,16 @@
+# - Config file for the Ini package
+# It defines the following variables
+#  INI_INCLUDE_DIRS - include directories for Ini
+#  INI_LIBRARIES    - libraries to link against
+
+# Compute paths
+get_filename_component(INI_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(INI_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+if(NOT TARGET foo AND NOT Ini_BINARY_DIR)
+  include("${INI_CMAKE_DIR}/IniTargets.cmake")
+endif()
+
+# These are IMPORTED targets created by IniTargets.cmake
+set(INI_LIBRARIES ini)
