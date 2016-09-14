@@ -33,7 +33,7 @@ DEALINGS IN THE SOFTWARE.
 #include<string.h>
 #include"ini.h"
 
-#define XINI_DEBUG
+#define INI_DEBUG1
 
 size_t hashCode(char *name) {
 	size_t result = 0;
@@ -299,7 +299,6 @@ struct IniValue *lookup_val(struct IniSection *sec, char *name) {
 			if((v->name != NULL) && (strcmp(v->name, name)==0)) {
 				return v;
 			}
-			break;
 		}
 		v = v->next;
 	}
