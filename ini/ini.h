@@ -39,5 +39,6 @@ extern void ini_free(void *ini);
 extern void ini_getbool(void *ini, char *section, char *name, char *value);
 extern void ini_getint(void *ini, char *section, char *name, uint64_t *value);
 extern void ini_getstr(void *ini, char *section, char *name, char *value, int len);
+extern int ini_strlen(void *ini, char *section, char *name);
 
 #endif

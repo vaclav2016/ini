@@ -33,7 +33,7 @@ DEALINGS IN THE SOFTWARE.
 #include<string.h>
 #include"ini.h"
 
-#define INI_DEBUG1
+#define INI_DEBUG
 
 size_t hashCode(char *name) {
 	size_t result = 0;
@@ -295,7 +295,7 @@ struct IniValue *lookup_val(struct IniSection *sec, char *name) {
 	size_t hcode = hashCode(name);
 	struct IniValue *v = sec->value;
 	while(v != NULL) {
-		if( hcode ==v->hcode ) {
+		if( hcode == v->hcode ) {
 			if((v->name != NULL) && (strcmp(v->name, name)==0)) {
 				return v;
 			}
@@ -335,7 +335,46 @@ void ini_getstr(void *iniptr, char *section, char *name, char *value, int len) {
 		*value = 0;
 		return;
 	}
-	strncpy(value, val->value, len-1);
+	strncpy(value, val->value, len - 1);
+	*(value+len - 1) = 0;
+#ifdef INI_DEBUG
+	printf("ini_getstr() -> [%s] (%s) %d\n", value, val->value, len-1);
+#endif
+}
+
+int ini_strlen(void *iniptr, char *section, char *name) {
+	struct IniFile *ini = iniptr;
+	struct IniSection *sec = NULL;
+	struct IniValue *val = NULL;
+	if(ini == NULL) {
+		return -1;
+	}
+	size_t hcode = hashCode(section);
+	sec = ini->sections;
+	while( sec != NULL ) {
+		if(hcode == sec->hcode) {
+			if((sec->name != NULL) && (strcmp(sec->name, section) == 0)) {
+#ifdef INI_DEBUG
+				printf("section [%s] found\n", section);
+#endif
+				break;
+			}
+		}
+		sec = sec->next;
+	}
+	val = lookup_val(sec, name);
+	val = (val == NULL) ? lookup_val(ini->nosection, name) : val;
+	if( val == NULL ) {
+#ifdef INI_DEBUG
+		printf("key [%s] not found\n", name);
+#endif
+		return -1;
+	}
+#ifdef INI_DEBUG
+	printf("ini_strlen() -> %d [%s]\n", strlen(val->value), val->value);
+#endif
+
+	return strlen(val->value);
 }
 
 void ini_getint(void *iniptr, char *section, char *name, uint64_t *value) {
@@ -374,7 +413,7 @@ void ini_getbool(void *iniptr, char *section, char *name, char *value) {
 	}
 }
 
-#ifdef INI_DEBUG
+#ifdef INI_DEBUG22
 main() {
 	char buf[100];
 	void *ini = ini_load("test.conf");
