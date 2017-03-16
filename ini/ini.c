@@ -43,7 +43,7 @@ size_t hashCode(char *name) {
 			name++;
 		}
 	}
-	return 0;
+	return result;
 }
 
 struct IniValue {
