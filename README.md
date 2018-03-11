@@ -15,7 +15,7 @@ Support sections. Syntax like:
 
 ## Example
 
-'''c
+```c
     char strValue[256];
     uint64_t intValue;
 
@@ -29,7 +29,7 @@ Support sections. Syntax like:
     ini_getint(conf, "section2", "key3", &intValue);
 
     ini_free(conf);
-'''
+```
 
 ## Build
 
